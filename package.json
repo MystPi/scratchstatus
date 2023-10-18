@@ -1,0 +1,39 @@
+{
+  "name": "scratchstatus",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Dynamic statuses for Scratch",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts",
+    "dev": "tsup src/index.ts --format esm --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mystpi/scratchstatus.git"
+  },
+  "keywords": [
+    "scratch",
+    "status",
+    "aviate",
+    "dynamic"
+  ],
+  "author": "MystPi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mystpi/scratchstatus/issues"
+  },
+  "homepage": "https://github.com/mystpi/scratchstatus#readme",
+  "devDependencies": {
+    "@types/moo": "^0.5.6",
+    "@types/node": "^20.5.1",
+    "tsup": "^7.2.0"
+  },
+  "dependencies": {
+    "magic-string": "^0.30.2",
+    "moo": "^0.5.2",
+    "node-fetch": "^3.3.2"
+  }
+}
