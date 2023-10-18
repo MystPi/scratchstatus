@@ -19,7 +19,7 @@ export const scratchstatus = createSystem(config, {
   add: {
     args: ['a', 'b'],
     description: 'Adds a and b',
-    func: ([a, b]) => {
+    do: ([a, b]) => {
       assertNumber(a);
       assertNumber(b);
       return a + b;
@@ -28,7 +28,7 @@ export const scratchstatus = createSystem(config, {
   sub: {
     args: ['a', 'b'],
     description: 'Subtracts b from a',
-    func: ([a, b]) => {
+    do: ([a, b]) => {
       assertNumber(a);
       assertNumber(b);
       return a - b;
@@ -37,7 +37,7 @@ export const scratchstatus = createSystem(config, {
   mul: {
     args: ['a', 'b'],
     description: 'Multiplies a and b',
-    func: ([a, b]) => {
+    do: ([a, b]) => {
       assertNumber(a);
       assertNumber(b);
       return a * b;
@@ -46,7 +46,7 @@ export const scratchstatus = createSystem(config, {
   div: {
     args: ['a', 'b'],
     description: 'Divides a by b',
-    func: ([a, b]) => {
+    do: ([a, b]) => {
       assertNumber(a);
       assertNumber(b);
       return a / b;
@@ -55,7 +55,7 @@ export const scratchstatus = createSystem(config, {
   pow: {
     args: ['a', 'b'],
     description: 'Raises a to the power of b',
-    func: ([a, b]) => {
+    do: ([a, b]) => {
       assertNumber(a);
       assertNumber(b);
       return Math.pow(a, b);
@@ -64,7 +64,7 @@ export const scratchstatus = createSystem(config, {
   root: {
     args: ['a', 'b'],
     description: 'Finds the Nth root of a',
-    func: ([a, b]) => {
+    do: ([a, b]) => {
       assertNumber(a);
       assertNumber(b);
       return Math.pow(a, 1 / b);
@@ -73,7 +73,7 @@ export const scratchstatus = createSystem(config, {
   percent: {
     args: ['a', 'b'],
     description: 'Finds what percent a is of b',
-    func: ([a, b]) => {
+    do: ([a, b]) => {
       assertNumber(a);
       assertNumber(b);
       return (a / b) * 100;
@@ -83,7 +83,7 @@ export const scratchstatus = createSystem(config, {
     args: ['number'],
     description:
       'Returns the ordinal version of a number. 1st, 32nd, 53rd, etc.',
-    func: ([number]) => {
+    do: ([number]) => {
       assertNumber(number);
       const j = number % 10;
       const k = number % 100;
@@ -103,7 +103,7 @@ export const scratchstatus = createSystem(config, {
   sep: {
     args: ['number'],
     description: 'Formats a number with commas',
-    func: ([number]) => {
+    do: ([number]) => {
       assertNumber(number);
       return number.toLocaleString('en');
     },
@@ -111,7 +111,7 @@ export const scratchstatus = createSystem(config, {
   round: {
     args: ['a', 'b'],
     description: 'Rounds a to the given number of decimal places',
-    func: ([a, b]) => {
+    do: ([a, b]) => {
       assertNumber(a);
       assertNumber(b);
       return Math.round((a + Number.EPSILON) * 10 ** b) / 10 ** b;
@@ -120,40 +120,40 @@ export const scratchstatus = createSystem(config, {
   join: {
     args: null,
     description: 'Joins every argument together',
-    func: (args) => args.join(''),
+    do: (args) => args.join(''),
   },
   // --- Logic ---
   eq: {
     args: ['a', 'b'],
     description: 'Checks if a is equal to b',
-    func: ([a, b]) => a === b,
+    do: ([a, b]) => a === b,
   },
   neq: {
     args: ['a', 'b'],
     description: 'Checks if a is not equal to b',
-    func: ([a, b]) => a !== b,
+    do: ([a, b]) => a !== b,
   },
   more: {
     args: ['a', 'b'],
     description: 'Checks if a is greater than b',
-    func: ([a, b]) => a > b,
+    do: ([a, b]) => a > b,
   },
   less: {
     args: ['a', 'b'],
     description: 'Checks if a is less than b',
-    func: ([a, b]) => a < b,
+    do: ([a, b]) => a < b,
   },
   not: {
     args: ['x'],
     description: 'Returns the opposite of x, i.e. !x',
-    func: ([x]) => !x,
+    do: ([x]) => !x,
   },
   if: {
     control: true,
     args: ['condition', 'true', 'false'],
     description:
       'If the condition is true, returns the first argument, otherwise returns the second',
-    func: async ([condition, trueBranch, falseBranch], ctx) => {
+    do: async ([condition, trueBranch, falseBranch], ctx) => {
       if (await ctx.evalNode(condition)) {
         return ctx.evalNode(trueBranch);
       } else {
@@ -165,33 +165,33 @@ export const scratchstatus = createSystem(config, {
   username: {
     args: [],
     description: 'Get your username',
-    func: (_, { username }) => username,
+    do: (_, { username }) => username,
   },
   id: {
     args: [],
     description: 'Get your ID',
-    func: (_, { data }) => data.get('userdata', 0, ['id']),
+    do: (_, { data }) => data.get('userdata', 0, ['id']),
   },
   country: {
     args: [],
     description: 'Get your country',
-    func: (_, { data }) => data.get('userdata', 'error', ['country']),
+    do: (_, { data }) => data.get('userdata', 'error', ['country']),
   },
   status: {
     args: [],
     description: "Your status on Scratch, e.g., 'Scratcher'",
-    func: (_, { data }) => data.get('userdata', 'error', ['status']),
+    do: (_, { data }) => data.get('userdata', 'error', ['status']),
   },
   followers: {
     args: [],
     description:
       'Get your followers. A shorter way of saying `{amount followers}`',
-    func: (_, { data }) => data.get('userdata', 0, ['statistics', 'followers']),
+    do: (_, { data }) => data.get('userdata', 0, ['statistics', 'followers']),
   },
   amount: {
     args: ['category'],
     description: 'Get your total amount of a category (loves, comments, etc.)',
-    func: ([category], { data }) => {
+    do: ([category], { data }) => {
       assertCategory(category);
       return data.get('userdata', 0, ['statistics', category]);
     },
@@ -199,7 +199,7 @@ export const scratchstatus = createSystem(config, {
   rank: {
     args: ['category'],
     description: 'Get your rank in a category',
-    func: ([category], { data }) => {
+    do: ([category], { data }) => {
       assertCategory(category);
       return data.get('userdata', 0, ['statistics', 'ranks', category]);
     },
@@ -207,14 +207,13 @@ export const scratchstatus = createSystem(config, {
   postcount: {
     args: [],
     description: 'Get your post count. A shorter way of saying `{posts total}`',
-    func: (_, { data }) =>
-      data.get('forumdata', 0, ['counts', 'total', 'count']),
+    do: (_, { data }) => data.get('forumdata', 0, ['counts', 'total', 'count']),
   },
   posts: {
     args: ['forum'],
     description:
       'Get your post count in a forum. Use `total` to get the total number of posts',
-    func: ([forum], { data }) => {
+    do: ([forum], { data }) => {
       assertForum(forum);
       return data.get('forumdata', 0, [
         'counts',
@@ -226,7 +225,7 @@ export const scratchstatus = createSystem(config, {
   forumrank: {
     args: ['forum'],
     description: 'Get your rank in a forum',
-    func: ([forum], { data }) => {
+    do: ([forum], { data }) => {
       assertForum(forum);
       return data.get('forumdata', 0, [
         'counts',
@@ -239,7 +238,7 @@ export const scratchstatus = createSystem(config, {
   joke: {
     args: [],
     description: 'Get a random joke (limit of one in your status)',
-    func: (_, state) => {
+    do: (_, state) => {
       if (state.hadJoke) {
         throw new Error('Only one joke component is allowed');
       }
@@ -250,7 +249,7 @@ export const scratchstatus = createSystem(config, {
   random: {
     args: ['a', 'b'],
     description: 'Get a random number between a and b',
-    func: ([a, b]) => {
+    do: ([a, b]) => {
       assertNumber(a);
       assertNumber(b);
       return Math.floor(Math.random() * (b - a + 1)) + a;
@@ -259,11 +258,11 @@ export const scratchstatus = createSystem(config, {
   open: {
     args: [],
     description: 'A literal `{`',
-    func: () => '{',
+    do: () => '{',
   },
   close: {
     args: [],
     description: 'A literal `}`',
-    func: () => '}',
+    do: () => '}',
   },
 });

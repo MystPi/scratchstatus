@@ -13,11 +13,11 @@ type Component<S> = {
 } & (
   | {
       control?: false;
-      func: (args: LiteralType[], state: S) => MaybePromise<LiteralType>;
+      do: (args: LiteralType[], state: S) => MaybePromise<LiteralType>;
     }
   | {
       control: true;
-      func: (
+      do: (
         args: ValueAstNode[],
         ctx: Evaluator<S>,
         state: S
@@ -67,10 +67,10 @@ export class Evaluator<S> {
     }
 
     if (component.control) {
-      return component.func(node.args, this, this.state);
+      return component.do(node.args, this, this.state);
     }
 
     const args = await this.evalNodes(node.args);
-    return component.func(args, this.state);
+    return component.do(args, this.state);
   }
 }

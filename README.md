@@ -30,17 +30,17 @@ const system = createSystem(config, {
   username: {
     args: [],
     description: 'Returns your username',
-    func: (_, { username }) => username,
+    do: (_, { username }) => username,
   },
   join: {
     args: ['a', 'b'],
     description: 'Joins a and b together',
-    func: ([a, b]) => `${a}${b}`,
+    do: ([a, b]) => `${a}${b}`,
   },
   count: {
     args: [],
     description: 'Count by 1',
-    func: (_, state) => {
+    do: (_, state) => {
       return state.count++;
     },
   },
