@@ -1,4 +1,4 @@
-import type { LiteralType } from '../system/parser_ast';
+import type { LiteralType } from '../system/parser';
 import fetch from 'node-fetch';
 
 export type DataSources = Record<string, string>;
